@@ -1,16 +1,17 @@
-"""Las 7 dimensiones de investigación con mega-prompt dinámico v1."""
+"""Las 7 dimensiones de investigación con mega-prompt dinámico y PROHIBICIÓN TOTAL de tablas."""
 
 def generar_mega_prompt(client, objetivo: str) -> str:
-    """Genera un mega-prompt optimizado a partir del objetivo del usuario."""
+    """Genera el mega-prompt optimizado y fuerza cero tablas."""
     prompt_meta = (
         f'Eres el mejor ingeniero de prompts del mundo especializado en investigación profunda con Gemini.\n\n'
         f'OBJETIVO DEL USUARIO: "{objetivo}"\n\n'
         'Genera UN SOLO MEGA-PROMPT completo, autónomo y ultra-optimizado que servirá de base común para investigar este objetivo en 7 dimensiones exhaustivas.\n'
         'El mega-prompt debe comenzar exactamente con esta frase:\n'
         f'"Eres el mayor experto del mundo en este tema. Investiga de forma EXTREMADAMENTE detallada, objetiva y actualizada el siguiente objetivo: {objetivo}"\n\n'
-        'Incluye estas instrucciones globales obligatorias en el mega-prompt:\n'
+        'Incluye estas instrucciones globales OBLIGATORIAS y en negrita dentro del mega-prompt:\n'
         '- Profundidad máxima con datos reales y actuales (2024-2026)\n'
-        '- Uso obligatorio de formato Markdown, tablas cuando sea útil y listas numeradas\n'
+        '- Uso obligatorio de formato Markdown puro\n'
+        '**PROHIBIDO ABSOLUTAMENTE usar tablas Markdown en ninguna sección. Solo encabezados con # ## ###, listas con - o números, **negritas**, *cursiva* y bloques de código si es necesario. Nada de |---| ni tablas.**\n'
         '- Citar fuentes siempre que sea posible\n'
         '- Ser brutalmente honesto, evitar optimismo infundado y destacar riesgos reales\n'
         '- Enfocarse en información accionable y concreta\n\n'
@@ -21,8 +22,14 @@ def generar_mega_prompt(client, objetivo: str) -> str:
     return resultado["texto"].strip()
 
 def crear_dimensiones(mega_base: str) -> list[dict]:
-    """Crea las 7 dimensiones usando el mega-prompt generado como base."""
-    base = mega_base + "\n\nSé EXTREMADAMENTE detallado. Cita datos reales y actuales. Usa formato Markdown con secciones claras y tablas cuando corresponda.\n\n"
+    """Crea las 7 dimensiones usando el mega-prompt generado como base y reforzando cero tablas."""
+    base = mega_base + (
+        "\n\nSé EXTREMADAMENTE detallado. Cita datos reales y actuales. "
+        "Usa formato Markdown puro con secciones claras. "
+        "**PROHIBIDO ABSOLUTAMENTE usar tablas Markdown en ninguna sección. "
+        "Solo encabezados con # ## ###, listas con - o números, **negritas**, "
+        "*cursiva* y bloques de código si es necesario. Nada de |---| ni tablas.**\n\n"
+    )
     
     return [
         {
@@ -54,8 +61,7 @@ def crear_dimensiones(mega_base: str) -> list[dict]:
                       "4. **COSTOS**: Estructura, costos de entrada, economías de escala\n"
                       "5. **INGRESOS**: Fuentes, márgenes, revenue streams\n"
                       "6. **IMPACTO MACRO**: PIB, empleos, cadenas de suministro\n"
-                      "7. **GEOGRAFÍA ECONÓMICA**: Mercados rentables, emergentes, barreras\n\n"
-                      "Incluye CIFRAS REALES de 2024-2026. Usa tablas."
+                      "7. **GEOGRAFÍA ECONÓMICA**: Mercados rentables, emergentes, barreras"
         },
         {
             "num": 3,
@@ -69,8 +75,7 @@ def crear_dimensiones(mega_base: str) -> list[dict]:
                       "4. **DATOS DEMOGRÁFICOS**: Quién usa/compra, segmentación\n"
                       "5. **RANKINGS**: Top 10 por cuota, satisfacción, calidad\n"
                       "6. **DATOS DE TENDENCIA**: Google Trends, volúmenes de búsqueda\n"
-                      "7. **ESTUDIOS**: Gartner, McKinsey, papers académicos\n\n"
-                      "TODO con números concretos. Tablas. Fuentes."
+                      "7. **ESTUDIOS**: Gartner, McKinsey, papers académicos"
         },
         {
             "num": 4,
@@ -85,8 +90,7 @@ def crear_dimensiones(mega_base: str) -> list[dict]:
                       "5. **REGULACIÓN**: Leyes clave, certificaciones, compliance\n"
                       "6. **CADENA DE SUMINISTRO**: Proveedores, dependencias\n"
                       "7. **MADUREZ**: Fase del ciclo de vida, predicción\n"
-                      "8. **MOVIMIENTOS RECIENTES**: M&A, alianzas 2023-2026\n\n"
-                      "Sé específico con nombres, fechas y datos."
+                      "8. **MOVIMIENTOS RECIENTES**: M&A, alianzas 2023-2026"
         },
         {
             "num": 5,
@@ -101,8 +105,7 @@ def crear_dimensiones(mega_base: str) -> list[dict]:
                       "5. **TECNOLOGÍA**: Stack recomendado, herramientas\n"
                       "6. **EQUIPO**: Perfiles clave, dónde encontrar talento\n"
                       "7. **CONSEJOS INSIDER**: Secretos, errores al empezar\n"
-                      "8. **FRAMEWORK DE DECISIÓN**: Priorización, cuándo pivotar\n\n"
-                      "Ejemplos reales y frameworks accionables."
+                      "8. **FRAMEWORK DE DECISIÓN**: Priorización, cuándo pivotar"
         },
         {
             "num": 6,
@@ -117,8 +120,7 @@ def crear_dimensiones(mega_base: str) -> list[dict]:
                       "5. **RIESGOS LEGALES**: Demandas, IP, compliance\n"
                       "6. **SEÑALES DE ALERTA**: Red flags, early warnings\n"
                       "7. **PLAN DE MITIGACIÓN**: Plan B-C-D, seguros\n"
-                      "8. **BLACK SWANS**: Eventos devastadores, preparación\n\n"
-                      "Sé BRUTALMENTE honesto. Datos reales de fracasos."
+                      "8. **BLACK SWANS**: Eventos devastadores, preparación"
         },
         {
             "num": 7,
@@ -135,7 +137,6 @@ def crear_dimensiones(mega_base: str) -> list[dict]:
                       "7. **PREDICCIONES**: Gartner, McKinsey, escenarios\n"
                       "8. **FIRST-MOVER ADVANTAGES**: Ventanas que se cierran\n"
                       "9. **SINERGIAS**: Partners, co-creación\n"
-                      "10. **IMPACTO TRANSFORMADOR**: Mejor escenario posible\n\n"
-                      "Visionario pero basado en datos."
+                      "10. **IMPACTO TRANSFORMADOR**: Mejor escenario posible"
         },
     ]
